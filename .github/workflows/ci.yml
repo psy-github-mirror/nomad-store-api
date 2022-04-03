@@ -17,3 +17,16 @@ on:
   pull_request:
     branches:
       - main
+
+jobs:
+  test:
+    name: Run api tests with Mocha
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - run: npm ci
+      - run: npm test
