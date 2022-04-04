@@ -71,10 +71,9 @@ data "aws_subnets" "public" {
 resource "aws_lb" "nomad_lb" {
   name               = var.cluster_name
   load_balancer_type = "application"
-  subnets            = [for subnet in aws_subnets.public : subnet.id]
+  subnets            = data.aws_subnets.public.ids
   security_groups    = [aws_security_group.alb.id]
 
-  # subnets            = data.aws_subnets.public.ids
 
   access_logs {
     bucket  = "fss-service-files"
