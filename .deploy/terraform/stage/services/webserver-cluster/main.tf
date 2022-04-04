@@ -40,6 +40,6 @@ module "webserver_cluster" {
   log_profile_name = "nomad_stage_logs_profile"
 
   instance_type = "t2.micro"
-  min_size      = 2
+  min_size      = 1
   max_size      = 3
 }

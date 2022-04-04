@@ -4,17 +4,17 @@ resource "aws_vpc" "vpc" {
   enable_dns_hostnames = true
 }
 
-// Internet Gateway for the VPC
+# Internet Gateway for the VPC
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
 }
 
-// AZ data source
+# AZ data source
 data "aws_availability_zones" "available" {
   state = "available"
 }
 
-// public subnet 1
+# public subnet 1
 resource "aws_subnet" "subnet_1_public" {
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = var.cidr_public_subnet_1
@@ -25,7 +25,7 @@ resource "aws_subnet" "subnet_1_public" {
   }
 }
 
-// public subnet 2
+# public subnet 2
 resource "aws_subnet" "subnet_2_public" {
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = var.cidr_public_subnet_2
@@ -36,7 +36,7 @@ resource "aws_subnet" "subnet_2_public" {
   }
 }
 
-// public subnet 3
+# public subnet 3
 resource "aws_subnet" "subnet_3_public" {
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = var.cidr_public_subnet_3
@@ -47,7 +47,7 @@ resource "aws_subnet" "subnet_3_public" {
   }
 }
 
-// route table for public subnets 
+# route table for public subnets 
 resource "aws_route_table" "rtb_public" {
   vpc_id = aws_vpc.vpc.id
 
@@ -57,7 +57,7 @@ resource "aws_route_table" "rtb_public" {
   }
 }
 
-// Associate a route table with a public subnets
+# Associate a route table with a public subnets
 resource "aws_route_table_association" "rta_subnet_1_public" {
   subnet_id      = aws_subnet.subnet_1_public.id
   route_table_id = aws_route_table.rtb_public.id
