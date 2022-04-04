@@ -45,8 +45,16 @@ resource "aws_security_group_rule" "allow_all_outbound" {
   cidr_blocks = local.all_ips
 }
 
-data "aws_subnet_ids" "public" {
-  vpc_id = aws_vpc.vpc.id
+# get the details of default vpc
+data "aws_vpc" "default" {
+  default = true
+}
+
+data "aws_subnets" "public" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
 
   tags = {
     Tier = "Public"
@@ -63,7 +71,7 @@ data "aws_subnet_ids" "public" {
 resource "aws_lb" "nomad_lb" {
   name               = var.cluster_name
   load_balancer_type = "application"
-  subnets            = data.aws_subnet_ids.public.ids
+  subnets            = data.aws_subnets.public.ids
   security_groups    = [aws_security_group.alb.id]
 
   access_logs {
@@ -220,7 +228,7 @@ resource "aws_lb_target_group" "asg" {
 resource "aws_autoscaling_group" "nomad_asg" {
   name                 = "${aws_launch_configuration.nomad_lc.name}-asg"
   launch_configuration = aws_launch_configuration.nomad_lc.name
-  vpc_zone_identifier  = data.aws_subnet_ids.public.ids
+  vpc_zone_identifier  = data.aws_subnets.public.ids
 
   target_group_arns = [aws_lb_target_group.asg.arn]
   health_check_type = "ELB"
