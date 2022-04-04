@@ -60,19 +60,21 @@ data "aws_subnets" "public" {
     Tier = "Public"
   }
 
-  depends_on = [
-    aws_subnet.subnet_1_public,
-    aws_subnet.subnet_2_public,
-    aws_subnet.subnet_3_public
-  ]
+  # depends_on = [
+  #   aws_subnet.subnet_1_public,
+  #   aws_subnet.subnet_2_public,
+  #   aws_subnet.subnet_3_public
+  # ]
 }
 
 # load balancer resource
 resource "aws_lb" "nomad_lb" {
   name               = var.cluster_name
   load_balancer_type = "application"
-  subnets            = data.aws_subnets.public.ids
+  subnets            = [for subnet in aws_subnet.public : subnet.id]
   security_groups    = [aws_security_group.alb.id]
+
+  # subnets            = data.aws_subnets.public.ids
 
   access_logs {
     bucket  = "fss-service-files"
