@@ -90,7 +90,7 @@ resource "aws_lb" "nomad_lb" {
 
 
   access_logs {
-    bucket  = "fss-service-files"
+    bucket  = "xabru-fss-service-files"
     prefix  = "nomad-lb"
     enabled = true
   }
