@@ -71,7 +71,7 @@ data "aws_subnets" "public" {
 resource "aws_lb" "nomad_lb" {
   name               = var.cluster_name
   load_balancer_type = "application"
-  subnets            = [for subnet in aws_subnet.public : subnet.id]
+  subnets            = [for subnet in aws_subnets.public : subnet.id]
   security_groups    = [aws_security_group.alb.id]
 
   # subnets            = data.aws_subnets.public.ids
