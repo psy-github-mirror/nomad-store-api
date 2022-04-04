@@ -1,18 +1,15 @@
 variable "stripe_secret_key" {
   description = "The Stripe secret key"
-  default     = "zzz"
   type        = string
 }
 
 variable "web_app_url" {
   description = "Web app url to redirect user after payment"
-  default     = "zzz"
   type        = string
 }
 
 variable "web_hook_secret" {
   description = "The Stripe webhook secret"
-  default     = "zzz"
   type        = string
 }
 
