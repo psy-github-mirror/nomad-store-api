@@ -87,13 +87,6 @@ resource "aws_lb" "nomad_lb" {
   load_balancer_type = "application"
   subnets            = data.aws_subnet_ids.public.ids
   security_groups    = [aws_security_group.alb.id]
-
-
-  access_logs {
-    bucket  = "xabru-fss-service-files"
-    prefix  = "nomad-lb"
-    enabled = true
-  }
 }
 
 # user data to be used for launch config
