@@ -1,4 +1,4 @@
-# __Building a Site Connectivity Checker - Real Python
+# Building a Site Connectivity Checker - Real Python
 
 <details> <summary><b>videos</b></summary>
 
